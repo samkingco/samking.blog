@@ -13,7 +13,7 @@ export function DefaultHeadTags({
   children,
 }: Props) {
   const router = useRouter();
-  const url = `https://words.samking.co/${router.pathname}`;
+  const url = `https://samking.blog/${router.pathname}`;
 
   return (
     <Head>

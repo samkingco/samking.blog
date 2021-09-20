@@ -37,8 +37,7 @@ export default function Index({
       ))}
       <footer>
         <p className="subtle">
-          Code on{" "}
-          <a href="https://github.com/samkingco/words.samking">Github</a>{" "}
+          Code on <a href="https://github.com/samkingco/samking.blog">Github</a>{" "}
           deployed to <a href="https://ipfs.io/">IPFS</a>.
         </p>
       </footer>
