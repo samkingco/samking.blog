@@ -4,18 +4,31 @@ import matter from "gray-matter";
 import { format } from "date-fns";
 import { ParsedUrlQuery } from "querystring";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { serialize } from "next-mdx-remote/serialize";
-import { Post, PostData, postFilePaths, POSTS_PATH } from "../../mdx-utils";
-import { PostContent } from "../../components/PostContent";
-import { SiteHeader } from "../../components/SiteHeader";
-import { DefaultHeadTags } from "../../components/DefaultHeadTags";
+import { Post, PostData, postFilePaths, POSTS_PATH } from "../mdx-utils";
+import { PostContent } from "../components/PostContent";
+import { SiteHeader } from "../components/SiteHeader";
+import { DefaultHeadTags } from "../components/DefaultHeadTags";
+import NotFound from "./404";
 
 export default function PostPage({
   data,
   content,
   slug,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <>
+        <DefaultHeadTags title="404 — Words" />
+        <NotFound />
+      </>
+    );
+  }
+
   return (
     <>
       <DefaultHeadTags

@@ -21,13 +21,13 @@ export default function Index({
             {format(new Date(post.data.date), "do MMMM, yyyy")}
           </p>
           <h2>
-            <Link as={`/posts/${post.slug}`} href={`/posts/[slug]`}>
+            <Link as={`/${post.slug}`} href={`/[slug]`}>
               <a>{post.data.title}</a>
             </Link>
           </h2>
           <p>{post.data.excerpt}</p>
           <p>
-            <Link as={`/posts/${post.slug}`} href={`/posts/[slug]`}>
+            <Link as={`/${post.slug}`} href={`/[slug]`}>
               <a aria-label={`Continue reading ${post.data.title}`}>
                 Continue reading
               </a>
