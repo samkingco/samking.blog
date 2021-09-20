@@ -52,7 +52,7 @@ export default function PostPage({
           <p className="subtle">
             Found a mistake? Edit on{" "}
             <a
-              href={`https://github.com/samkingco/words.samking/blob/main/posts/${slug}.mdx`}
+              href={`https://github.com/samkingco/words.samking/blob/main/src/posts/${slug}.mdx`}
             >
               GitHub
             </a>
