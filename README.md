@@ -1,12 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a small site that is built off markdown files. First some HTML files are generated using some templates in `src/build.ts`. Those files are then picked up by [Parcel](https://v2.parceljs.org/) to handle the final build including asset caching etc.
 
-## Run it locally
+## Build it locally
 
 ```bash
-npm run dev
+npm run build
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Deployment
 
