@@ -172,15 +172,19 @@ async function build() {
     })
   );
 
+  const sortedPosts = posts.sort((a, b) =>
+    a.data.date > b.data.date ? -1 : 1
+  );
+
   // Build index page
   await fse.outputFile(
     path.join(process.cwd(), "entry/index.html"),
-    generateIndexPage(posts)
+    generateIndexPage(sortedPosts)
   );
 
   // Build post pages
   await Promise.all(
-    posts.map(async (post) => {
+    sortedPosts.map(async (post) => {
       await fse.outputFile(
         path.join(process.cwd(), `entry/${post.slug}/index.html`),
         generatePostPage(post)
