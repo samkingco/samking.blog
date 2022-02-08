@@ -42,7 +42,7 @@
   --foreground-subtle: rgb(150 150 150);
   --accent: rgb(245, 42, 42);
 
-  --content-max-width: 36em;
+  --content-max-width: 40em;
 
   --font-mono: "Mono", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
     monospace;
@@ -111,22 +111,13 @@ body {
 
 .content {
   max-width: var(--content-max-width);
-  margin: 0;
+  margin: 0 auto;
   padding: 2rem 1rem 6rem;
 }
 
 @media (min-width: 36rem) {
   .content {
     padding: 4rem 1rem 12rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
-}
-
-@media (min-width: 56rem) {
-  .content {
-    margin-left: 4rem;
-    margin-right: 4rem;
   }
 }
 
@@ -160,6 +151,10 @@ body {
 
 .post-footer > *:nth-child(2) {
   margin-top: 1em;
+}
+
+.all-posts-link {
+  text-decoration: none;
 }
 
 h1,

@@ -132,7 +132,7 @@ function generatePostPage({ data, html, slug }: Post) {
           </header>
           ${html}
           <footer class="post-footer">
-            <a href="/">← All posts</a>
+            <a href="/" class="all-posts-link">← All posts</a>
             <p class="subtle">
               Found a mistake? Edit on 
               <a
