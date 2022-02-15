@@ -1,26 +1,17 @@
 @font-face {
-  font-family: "Sectra";
+  font-family: "Text";
   font-display: fallback;
-  src: url("fonts/GT-Sectra-Regular.woff") format("woff"),
-    url("fonts/GT-Sectra-Regular.woff2") format("woff2");
+  src: url("fonts/Text.woff") format("woff"),
+    url("fonts/Text.woff2") format("woff2");
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Sectra";
+  font-family: "Text";
   font-display: fallback;
-  src: url("fonts/GT-Sectra-Regular-Italic.woff") format("woff"),
-    url("fonts/GT-Sectra-Regular-Italic.woff2") format("woff2");
-  font-style: italic;
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "Sectra";
-  font-display: fallback;
-  src: url("fonts/GT-Sectra-Bold.woff") format("woff"),
-    url("fonts/GT-Sectra-Bold.woff2") format("woff2");
+  src: url("fonts/TextBold.woff") format("woff"),
+    url("fonts/TextBold.woff2") format("woff2");
   font-style: normal;
   font-weight: bold;
 }
@@ -44,18 +35,18 @@
 }
 
 :root {
-  --background: rgb(10, 10, 20);
-  --background-alpha: 10, 10, 20;
+  --background: rgb(0, 0, 0);
+  --background-alpha: 0, 0, 0;
   --foreground: rgb(255, 255, 255);
   --foreground-alpha: 255, 255, 255;
-  --foreground-subtle: rgb(180 180 180);
-  --accent: rgb(22, 56, 50);
+  --foreground-subtle: rgb(150 150 150);
+  --accent: rgb(245, 42, 42);
 
-  --content-max-width: 36rem;
+  --content-max-width: 40em;
 
   --font-mono: "Mono", SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
     monospace;
-  --font-serif: "Sectra", serif;
+  --font-serif: "Text", serif;
   --font-heading: "Nikolai", serif;
 }
 
@@ -75,14 +66,20 @@ body {
   background-color: var(--background);
   font-family: var(--font-serif);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.4;
   color: var(--foreground);
   cursor: crosshair;
 }
 
+@media (min-width: 36rem) {
+  body {
+    font-size: 20px;
+  }
+}
+
 ::selection {
   background-color: var(--accent);
-  color: var(--foreground);
+  color: var(--background);
 }
 
 .subtle {
@@ -90,17 +87,7 @@ body {
 }
 
 .site-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  padding-bottom: 2rem;
-  background-image: linear-gradient(
-    to right,
-    var(--foreground-subtle) 16%,
-    rgba(var(--background-alpha), 0) 0%
-  );
-  background-position: bottom;
-  background-size: 8px 1px;
-  background-repeat: repeat-x;
+  margin-bottom: 6rem;
 }
 
 .site-header-links {
@@ -110,7 +97,7 @@ body {
 }
 
 .site-logo {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-family: var(--font-heading);
 }
 
@@ -135,16 +122,7 @@ body {
 }
 
 .post-preview {
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  background-image: linear-gradient(
-    to right,
-    var(--foreground-subtle) 16%,
-    rgba(var(--background-alpha), 0) 0%
-  );
-  background-position: bottom;
-  background-size: 8px 1px;
-  background-repeat: repeat-x;
+  margin-bottom: 6rem;
 }
 
 .post-preview p + h2 {
@@ -168,22 +146,15 @@ body {
 }
 
 .post-footer {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  background-image: linear-gradient(
-    to right,
-    var(--foreground-subtle) 16%,
-    rgba(var(--background-alpha), 0) 0%
-  );
-  background-position: top;
-  background-size: 8px 1px;
-  background-repeat: repeat-x;
+  margin-top: 6rem;
 }
 
 .post-footer > *:nth-child(2) {
-  text-align: right;
+  margin-top: 1em;
+}
+
+.all-posts-link {
+  text-decoration: none;
 }
 
 h1,
@@ -289,7 +260,7 @@ blockquote + p,
 blockquote + ul,
 blockquote + ol,
 blockquote + blockquote {
-  margin-top: 0.75em;
+  margin-top: 1em;
 }
 
 p + h3,
@@ -369,6 +340,11 @@ blockquote {
   border-left: 2px solid rgba(var(--foreground-alpha), 0.1);
 }
 
+small {
+  font-size: 0.875em;
+  line-height: 1.4;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -405,16 +381,19 @@ hr {
   :root {
     --background: rgb(245, 245, 235);
     --background-alpha: 245, 245, 235;
-    --foreground: rgb(10, 10, 20);
-    --foreground-alpha: 10, 10, 20;
+    --foreground: rgb(0, 0, 0);
+    --foreground-alpha: 0, 0, 0;
     --foreground-subtle: rgb(88 88 88);
-  }
-
-  ::selection {
-    color: var(--background);
   }
 
   a:focus {
     color: var(--background);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

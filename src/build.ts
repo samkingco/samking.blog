@@ -51,6 +51,7 @@ function generateHead({ title, description, slug }: HeadProps) {
   <meta name="twitter:description" content="${description}" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@samkingco" />
+  <script defer data-domain="samking.blog" src="https://plausible.io/js/plausible.js"></script>
 </head>`;
 }
 
@@ -59,14 +60,10 @@ function generateSiteHeader() {
 <header class="site-header">
   <div class="site-header-links">
     <p class="site-logo">
-      <a href="/">words</a>
+      <a href="/">—words</a>
     </p>
     <a href="https://samking.co">samking.co</a>
   </div>
-  <p class="subtle">
-    Documenting some thoughts to help get me back into writing. Posts will
-    be about anything. Mostly my journey with design, Web3, and therapy.
-  </p>
 </header>`;
 }
 
@@ -76,19 +73,14 @@ function generatePostPreviews(posts: Post[]) {
       return `
 <article class="post-preview">
   <p class="subtle">
-    ${format(new Date(post.data.date), "do MMMM, yyyy")}
+    <small>
+      ${format(new Date(post.data.date), "do MMMM, yyyy")}
+    </small>
   </p>
   <h2>
     <a href="./${post.slug}/index.html">${post.data.title}</a>
   </h2>
   <p>${post.data.excerpt}</p>
-  <p>
-    <a href="./${post.slug}/index.html" aria-label="Continue reading '${
-        post.data.title
-      }'">
-      Continue reading
-    </a>
-  </p>
 </article>`;
     })
     .join("\n");
@@ -109,9 +101,7 @@ function generateIndexPage(posts: Post[]) {
       ${generatePostPreviews(posts)}
       <footer>
         <p class="subtle">
-          Code on
-          <a href="https://github.com/samkingco/samking.blog">Github</a>{" "}
-          deployed to <a href="https://ipfs.io/">IPFS</a>.
+          Code on <a href="https://github.com/samkingco/samking.blog">Github</a> deployed to <a href="https://ipfs.io/">IPFS</a>.
         </p>
       </footer>
     </main>
@@ -135,13 +125,15 @@ function generatePostPage({ data, html, slug }: Post) {
         <article class="post">
           <header class="post-header">
             <p class="subtle">
-              ${format(new Date(data.date), "do MMMM, yyyy")}
+              <small>
+                ${format(new Date(data.date), "do MMMM, yyyy")}
+              </small>
             </p>
             <h1>${data.title}</h1>
           </header>
           ${html}
           <footer class="post-footer">
-            <a href="/">All posts</a>
+            <a href="/" class="all-posts-link">← All posts</a>
             <p class="subtle">
               Found a mistake? Edit on 
               <a
