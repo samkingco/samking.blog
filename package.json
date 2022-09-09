@@ -7,9 +7,7 @@
     "nodemon": "nodemon --watch src --ext '*' --exec pnpm run parse-posts",
     "parcel": "parcel serve entry/index.html -p 3000",
     "dev": "concurrently -n \"N,P\" \"pnpm run nodemon\" \"pnpm run parcel\"",
-    "prebuild": "pnpm run parse-posts",
-    "build": "cross-env PARCEL_WORKERS=0 parcel build entry/*.html",
-    "postbuild": "ts-node --transpile-only --script-mode src/post-build.ts"
+    "build": "pnpm run parse-posts && cross-env PARCEL_WORKERS=0 parcel build entry/*.html && ts-node --transpile-only --script-mode src/post-build.ts"
   },
   "devDependencies": {
     "@parcel/transformer-image": "2.7.0",
