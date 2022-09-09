@@ -114,9 +114,8 @@ function generatePostPage({ data, html, slug }: Post) {
   <!DOCTYPE html>
   <html lang="en">
     ${generateHead({
-      title: "Words — Sam King",
-      description:
-        "Documenting some thoughts to help get me back into writing. Posts will be about anything. Mostly my journey with design, Web3, and therapy.",
+      title: `${data.title} — Sam King`,
+      description: data.excerpt,
       slug,
     })}
     <body>
