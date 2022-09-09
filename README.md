@@ -3,7 +3,7 @@ This is a small site that is built off markdown files. First some HTML files are
 ## Build it locally
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ## Deployment

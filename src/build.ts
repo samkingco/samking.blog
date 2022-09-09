@@ -1,9 +1,9 @@
+import { format } from "date-fns";
 import fs from "fs";
 import fse from "fs-extra";
-import path from "path";
 import matter from "gray-matter";
-import marked from "marked";
-import { format } from "date-fns";
+import { marked } from "marked";
+import path from "path";
 
 const POSTS_PATH = path.join(process.cwd(), "src/posts");
 
