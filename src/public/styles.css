@@ -82,6 +82,10 @@ body {
   color: var(--background);
 }
 
+img {
+  max-width: 100%;
+}
+
 .subtle {
   color: var(--foreground-subtle);
 }

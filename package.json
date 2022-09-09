@@ -12,6 +12,7 @@
     "postbuild": "ts-node --transpile-only --script-mode src/post-build.ts"
   },
   "devDependencies": {
+    "@parcel/transformer-image": "^2.0.0-rc.0",
     "@types/fs-extra": "^9.0.13",
     "@types/marked": "^3.0.1",
     "concurrently": "^6.2.1",
