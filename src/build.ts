@@ -31,7 +31,12 @@ interface HeadProps {
 }
 
 function generateHead({ title, description, slug }: HeadProps) {
-  const url = `https://samking.blog/${slug ? `${slug}/` : ""}`;
+  const baseURL = "https://samking.blog";
+  const url = `${baseURL}/${slug ? `${slug}/` : ""}`;
+  const socialImage = `${slug ? "../" : "./"}social/og-image${
+    slug ? `-${slug}` : ""
+  }.png`;
+
   return `
 <head>
   <meta charset="UTF-8" />
@@ -45,11 +50,13 @@ function generateHead({ title, description, slug }: HeadProps) {
   <meta name="description" content="${description}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${description}" />
+  <meta property="og:image" content="${socialImage}" />
   <meta property="og:url" content="${url}" />
   <meta property="og:site_name" content="${title}" />
   <meta name="twitter:title" content="${title}" />
   <meta name="twitter:description" content="${description}" />
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="${socialImage}" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@samkingco" />
   <script defer data-domain="samking.blog" src="https://plausible.io/js/plausible.js"></script>
 </head>`;
