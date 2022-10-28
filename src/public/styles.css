@@ -265,13 +265,6 @@ ol + ul,
 ol + ol,
 ol + table,
 ol + blockquote,
-blockquote + p,
-blockquote + ul,
-blockquote + ol,
-blockquote + blockquote {
-  margin-top: 1em;
-}
-
 p + h3,
 ol + h3,
 ul + h3,
@@ -293,8 +286,12 @@ table + p,
 table + ul,
 table + ol,
 table + table,
-table + blockquote {
-  margin-top: 1rem;
+table + blockquote,
+blockquote + p,
+blockquote + ul,
+blockquote + ol,
+blockquote + blockquote {
+  margin-top: 1em;
 }
 
 h1 + h1,
@@ -311,6 +308,10 @@ pre + h2,
 table + h2,
 blockquote + h2 {
   margin-top: 2rem;
+}
+
+li + li {
+  margin-top: 0.5rem;
 }
 
 li p + ul,
@@ -438,23 +439,21 @@ pre code {
   display: block;
 }
 
-pre > .codeBlock,
+pre > code[class*="language-"],
 pre > code {
   padding: 1rem;
   flex: 1;
+  white-space: nowrap;
 }
 
-.codeBlock .linenumber {
-  display: none !important;
-}
-
-.codeBlock code > span {
+code[class*="language-"] > span {
   display: block;
   position: relative;
   padding: 0.2em 0;
+  white-space: pre;
 }
 
-span[data="highlight"]:before {
+code[class*="language-"] .highlight:before {
   content: "";
   position: absolute;
   top: 0;

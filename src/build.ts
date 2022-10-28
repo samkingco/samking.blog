@@ -7,7 +7,23 @@ import path from "path";
 import prism from "prismjs";
 import loadLanguages from "prismjs/components/";
 
-loadLanguages(["markdown", "solidity", "tsx", "typescript"]);
+loadLanguages(["markdown", "solidity", "tsx", "typescript", "json"]);
+
+function parseRange(range: string) {
+  const res: number[] = [];
+  for (let el of range.split(",").map((str) => str.trim())) {
+    const [left, right] = el.split("-");
+    const leftInt = parseInt(left, 10);
+    res.push(leftInt);
+    if (right) {
+      const rightInt = parseInt(right, 10);
+      for (let i = leftInt + 1; i <= rightInt; i++) {
+        res.push(i);
+      }
+    }
+  }
+  return res;
+}
 
 const POSTS_PATH = path.join(process.cwd(), "src/posts");
 
@@ -166,9 +182,31 @@ async function build() {
       const { data, content } = matter(source);
 
       marked.setOptions({
-        highlight: function (code, lang) {
+        highlight: function (code, language) {
+          const lang = language.replace(/\{([^\}]*)\}/g, "");
+          const highlightQuery = language.match(/\{([^\}]*)\}/g);
+          const highlightLines: number[] = [];
+          if (highlightQuery) {
+            const lines = highlightQuery[0].replace("{", "").replace("}", "");
+            highlightLines.push(...parseRange(lines));
+          }
+
           if (prism.languages[lang]) {
-            return prism.highlight(code, prism.languages[lang], lang);
+            const highlighted = prism.highlight(
+              code,
+              prism.languages[lang],
+              lang
+            );
+
+            const lines = highlighted.split("\n");
+
+            return lines
+              .map((line, index) => {
+                return `<span${
+                  highlightLines.includes(index + 1) ? ' class="highlight"' : ""
+                }>${line || "\n"}</span>`;
+              })
+              .join("");
           } else {
             return code;
           }
