@@ -4,6 +4,10 @@ import fse from "fs-extra";
 import matter from "gray-matter";
 import { marked } from "marked";
 import path from "path";
+import prism from "prismjs";
+import loadLanguages from "prismjs/components/";
+
+loadLanguages(["markdown", "solidity", "tsx", "typescript"]);
 
 const POSTS_PATH = path.join(process.cwd(), "src/posts");
 
@@ -161,11 +165,21 @@ async function build() {
       const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
       const { data, content } = matter(source);
 
+      marked.setOptions({
+        highlight: function (code, lang) {
+          if (prism.languages[lang]) {
+            return prism.highlight(code, prism.languages[lang], lang);
+          } else {
+            return code;
+          }
+        },
+      });
+
       return {
         data: data as PostData,
         slug: filePath.replace(/\.md?$/, ""),
         content,
-        html: marked(content),
+        html: marked.parse(content),
       };
     })
   );
