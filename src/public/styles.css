@@ -404,16 +404,18 @@ hr {
 
 code {
   font-family: var(--font-mono);
+  font-size: 0.875rem;
+  -webkit-text-size-adjust: 100%;
   word-spacing: normal;
   color: rgba(var(--foreground-alpha), 0.8);
   background-color: rgba(var(--foreground-alpha), 0.05);
-  font-size: 0.875rem;
   margin: 0;
   padding: 0.0625rem 0.25rem;
 }
 
 pre {
   font-family: var(--font-mono);
+  font-size: 0.875rem;
   word-spacing: normal;
   background-color: rgba(var(--foreground-alpha), 0.05);
   direction: ltr;
