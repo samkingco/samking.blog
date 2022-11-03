@@ -42,6 +42,7 @@ interface Post {
   slug: string;
   content: string;
   html: string;
+  highlightedHtml: string;
 }
 
 interface HeadProps {
@@ -137,7 +138,7 @@ function generateIndexPage(posts: Post[]) {
 </html>`;
 }
 
-function generatePostPage({ data, html, slug }: Post) {
+function generatePostPage({ data, highlightedHtml, slug }: Post) {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -158,7 +159,7 @@ function generatePostPage({ data, html, slug }: Post) {
             </p>
             <h1>${data.title}</h1>
           </header>
-          ${html}
+          ${highlightedHtml}
           <footer class="post-footer">
             <a href="/" class="all-posts-link">← All posts</a>
             <p class="subtle">
@@ -178,6 +179,12 @@ function generatePostPage({ data, html, slug }: Post) {
 
 function formatRSSDate(date: string | number | Date) {
   return format(new Date(date), "iii, dd MMM yyyy HH:mm:ss 'GMT'");
+}
+
+function cleanPostHtml(html: string) {
+  return html
+    .replace(/src="..\//g, 'src="https://samking.blog/')
+    .replace(/href="\//g, 'href="https://samking.blog/');
 }
 
 function generateRSSFeed(posts: Post[]) {
@@ -206,7 +213,7 @@ ${posts
       <title>${post.data.title}</title>
       <link>https://samking.blog/${post.slug}</link>
       <guid>https://samking.blog/${post.slug}</guid>
-      <description>${post.data.excerpt}</description>
+      <description><![CDATA[${cleanPostHtml(post.html)}]]></description>
       <pubDate>${formatRSSDate(post.data.date)}</pubDate>
       <author>${contact}</author>
       <source url="https://samking.blog">samking.blog</source>
@@ -223,43 +230,44 @@ async function build() {
       const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
       const { data, content } = matter(source);
 
-      marked.setOptions({
-        highlight: function (code, language) {
-          const lang = language.replace(/\{([^\}]*)\}/g, "");
-          const highlightQuery = language.match(/\{([^\}]*)\}/g);
-          const highlightLines: number[] = [];
-          if (highlightQuery) {
-            const lines = highlightQuery[0].replace("{", "").replace("}", "");
-            highlightLines.push(...parseRange(lines));
-          }
-
-          if (prism.languages[lang]) {
-            const highlighted = prism.highlight(
-              code,
-              prism.languages[lang],
-              lang
-            );
-
-            const lines = highlighted.split("\n");
-
-            return lines
-              .map((line, index) => {
-                return `<span${
-                  highlightLines.includes(index + 1) ? ' class="highlight"' : ""
-                }>${line || "\n"}</span>`;
-              })
-              .join("");
-          } else {
-            return code;
-          }
-        },
-      });
-
       return {
         data: data as PostData,
         slug: filePath.replace(/\.md?$/, ""),
         content,
         html: marked.parse(content),
+        highlightedHtml: marked.parse(content, {
+          highlight: function (code, language) {
+            const lang = language.replace(/\{([^\}]*)\}/g, "");
+            const highlightQuery = language.match(/\{([^\}]*)\}/g);
+            const highlightLines: number[] = [];
+            if (highlightQuery) {
+              const lines = highlightQuery[0].replace("{", "").replace("}", "");
+              highlightLines.push(...parseRange(lines));
+            }
+
+            if (prism.languages[lang]) {
+              const highlighted = prism.highlight(
+                code,
+                prism.languages[lang],
+                lang
+              );
+
+              const lines = highlighted.split("\n");
+
+              return lines
+                .map((line, index) => {
+                  return `<span${
+                    highlightLines.includes(index + 1)
+                      ? ' class="highlight"'
+                      : ""
+                  }>${line || "\n"}</span>`;
+                })
+                .join("");
+            } else {
+              return code;
+            }
+          },
+        }),
       };
     })
   );
