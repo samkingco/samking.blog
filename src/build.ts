@@ -67,6 +67,7 @@ function generateHead({ title, description, slug }: HeadProps) {
   <link rel="icon" type="image/x-icon" href="${
     slug ? "../" : "./"
   }favicon.ico"  />
+  <link rel="alternate" type="application/rss+xml" title="Words RSS — Sam King" href="${baseURL}/rss.xml" />
   <meta name="description" content="${description}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${description}" />
@@ -175,6 +176,47 @@ function generatePostPage({ data, html, slug }: Post) {
   </html>`;
 }
 
+function formatRSSDate(date: string | number | Date) {
+  return format(new Date(date), "iii, dd MMM yyyy HH:mm:ss 'GMT'");
+}
+
+function generateRSSFeed(posts: Post[]) {
+  const title = "Words — Sam King";
+  const description =
+    "Documenting some thoughts to help get me back into writing. Posts will be about anything. Mostly my journey with design, Web3, and therapy.";
+  const link = "https://samking.blog";
+  const contact = "sam@samking.studio (Sam King)";
+
+  return `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${title}</title>
+    <link>${link}</link>
+    <atom:link href="${link}/rss.xml" rel="self" type="application/rss+xml" />
+    <description>${description}</description>
+    <copyright>Copyright ${new Date().getFullYear()}, Sam King</copyright>
+    <managingEditor>${contact}</managingEditor>
+    <webMaster>${contact}</webMaster>
+    <language>en-gb</language>
+    <pubDate>${formatRSSDate(posts[posts.length - 1].data.date)}</pubDate>
+    <lastBuildDate>${formatRSSDate(new Date())}</lastBuildDate>
+    <generator>https://github.com/samkingco/samking.blog</generator>
+${posts
+  .map(
+    (post) => `    <item>
+      <title>${post.data.title}</title>
+      <link>https://samking.blog/${post.slug}</link>
+      <guid>https://samking.blog/${post.slug}</guid>
+      <description>${post.data.excerpt}</description>
+      <pubDate>${formatRSSDate(post.data.date)}</pubDate>
+      <author>${contact}</author>
+      <source url="https://samking.blog">samking.blog</source>
+    </item>`
+  )
+  .join("\n")}
+  </channel>
+</rss>`;
+}
+
 async function build() {
   const posts: Post[] = await Promise.all(
     postFilePaths.map(async (filePath) => {
@@ -246,6 +288,12 @@ async function build() {
   await fse.copy(
     path.join(process.cwd(), "src/public"),
     path.join(process.cwd(), "entry")
+  );
+
+  // Build the RSS feed
+  await fse.outputFile(
+    path.join(process.cwd(), "dist/rss.xml"),
+    generateRSSFeed(sortedPosts)
   );
 }
 
