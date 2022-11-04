@@ -209,7 +209,7 @@ function generateRSSFeed(posts: Post[]) {
     <generator>https://github.com/samkingco/samking.blog</generator>
     <image>
       <url>./icon-round-144.png</url>
-      <title>Words</title>
+      <title>${title}</title>
       <link>${link}</link>
       <width>144</width>
       <height>144</height>
