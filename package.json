@@ -10,7 +10,9 @@
     "build": "pnpm run parse-posts && cross-env PARCEL_WORKERS=0 parcel build entry/*.html && ts-node --transpile-only --script-mode src/post-build.ts"
   },
   "devDependencies": {
+    "@parcel/packager-xml": "^2.7.0",
     "@parcel/transformer-image": "2.7.0",
+    "@parcel/transformer-xml": "^2.7.0",
     "@types/fs-extra": "9.0.13",
     "@types/marked": "4.0.7",
     "@types/prismjs": "^1.26.0",

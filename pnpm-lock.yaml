@@ -1,7 +1,9 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@parcel/packager-xml': ^2.7.0
   '@parcel/transformer-image': 2.7.0
+  '@parcel/transformer-xml': ^2.7.0
   '@types/fs-extra': 9.0.13
   '@types/marked': 4.0.7
   '@types/prismjs': ^1.26.0
@@ -20,7 +22,9 @@ specifiers:
   typescript: 4.8.3
 
 devDependencies:
+  '@parcel/packager-xml': 2.7.0_@parcel+core@2.7.0
   '@parcel/transformer-image': 2.7.0_@parcel+core@2.7.0
+  '@parcel/transformer-xml': 2.7.0_@parcel+core@2.7.0
   '@types/fs-extra': 9.0.13
   '@types/marked': 4.0.7
   '@types/prismjs': 1.26.0
@@ -589,6 +593,18 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/packager-xml/2.7.0_@parcel+core@2.7.0:
+    resolution: {integrity: sha512-V/JgF4WkCbizuG7KLb9GDwmfg86ecWT4n7VGPJnVe7JjLj0ULmcMayTjZBa1d0te+58VBwUBCsxro5pX0ga4PQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.7.0}
+    dependencies:
+      '@parcel/plugin': 2.7.0_@parcel+core@2.7.0
+      '@parcel/types': 2.7.0_@parcel+core@2.7.0
+      '@parcel/utils': 2.7.0
+      '@xmldom/xmldom': 0.7.8
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/plugin/2.7.0_@parcel+core@2.7.0:
     resolution: {integrity: sha512-qqgx+nnMn6/0lRc4lKbLGmhNtBiT93S2gFNB4Eb4Pfz/SxVYoW+fmml+KdfOSiZffWOAH5L6NwhyD7N8aSikzw==}
     engines: {node: '>= 12.0.0'}
@@ -839,6 +855,16 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/transformer-xml/2.7.0_@parcel+core@2.7.0:
+    resolution: {integrity: sha512-OFtEiPhPET5oXNelwY7fEYI/Hfs8QQKlileut/pqNqP6I6LNZFFuEox6CKm1gY/fxyfK1pef9YHdKtsEdhxFFA==}
+    engines: {node: '>= 12.0.0', parcel: ^2.7.0}
+    dependencies:
+      '@parcel/plugin': 2.7.0_@parcel+core@2.7.0
+      '@xmldom/xmldom': 0.7.8
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/types/2.7.0:
     resolution: {integrity: sha512-+dhXVUnseTCpJvBTGMp0V6X13z6O/A/+CUtwEpMGZ8XSmZ4Gk44GvaTiBOp0bJpWG4fvCKp+UmC8PYbrDiiziw==}
     dependencies:
@@ -949,6 +975,11 @@ packages:
 
   /@types/prismjs/1.26.0:
     resolution: {integrity: sha512-ZTaqn/qSqUuAq1YwvOFQfVW1AR/oQJlLSZVustdjwI+GZ8kr0MSHBj0tsXPW1EqHubx50gtBEjbPGsdZwQwCjQ==}
+    dev: true
+
+  /@xmldom/xmldom/0.7.8:
+    resolution: {integrity: sha512-PrJx38EfpitFhwmILRl37jAdBlsww6AZ6rRVK4QS7T7RHLhX7mSs647sTmgr9GIxe3qjXdesmomEgbgaokrVFg==}
+    engines: {node: '>=10.0.0'}
     dev: true
 
   /abbrev/1.1.1:

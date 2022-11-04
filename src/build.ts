@@ -54,9 +54,8 @@ interface HeadProps {
 function generateHead({ title, description, slug }: HeadProps) {
   const baseURL = "https://samking.blog";
   const url = `${baseURL}/${slug ? `${slug}/` : ""}`;
-  const socialImage = `${slug ? "../" : "./"}social/og-image${
-    slug ? `-${slug}` : ""
-  }.png`;
+  const basePath = slug ? "../" : "./";
+  const socialImage = `${basePath}social/og-image${slug ? `-${slug}` : ""}.png`;
 
   return `
 <head>
@@ -64,11 +63,13 @@ function generateHead({ title, description, slug }: HeadProps) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title}</title>
-  <link rel="stylesheet" href="${slug ? "../" : "./"}styles.css" />
-  <link rel="icon" type="image/x-icon" href="${
-    slug ? "../" : "./"
-  }favicon.ico"  />
-  <link rel="alternate" type="application/rss+xml" title="Words RSS — Sam King" href="${baseURL}/rss.xml" />
+  <link rel="stylesheet" href="${basePath}styles.css" />
+  <link rel="icon" type="image/x-icon" href="${basePath}favicon.ico"  />
+  <link rel='icon' type='image/png' href='${basePath}favicon-64.png'>
+  <link rel='icon' sizes='192x192' href='${basePath}icon-192.png'>
+  <link rel='apple-touch-icon' href='${basePath}icon-152.png'>
+  <meta name='msapplication-square310x310logo' content='${basePath}icon-310.png'>
+  <link rel="alternate" type="application/rss+xml" title="Words RSS — Sam King" href="${basePath}rss.xml" />
   <meta name="description" content="${description}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${description}" />
@@ -182,9 +183,7 @@ function formatRSSDate(date: string | number | Date) {
 }
 
 function cleanPostHtml(html: string) {
-  return html
-    .replace(/src="..\//g, 'src="https://samking.blog/')
-    .replace(/href="\//g, 'href="https://samking.blog/');
+  return html.replace(/src="..\//g, 'src="./').replace(/href="\//g, 'href="./');
 }
 
 function generateRSSFeed(posts: Post[]) {
@@ -192,7 +191,7 @@ function generateRSSFeed(posts: Post[]) {
   const description =
     "Documenting some thoughts to help get me back into writing. Posts will be about anything. Mostly my journey with design, Web3, and therapy.";
   const link = "https://samking.blog";
-  const contact = "sam@samking.studio (Sam King)";
+  const contact = "Sam King";
 
   return `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -207,6 +206,14 @@ function generateRSSFeed(posts: Post[]) {
     <pubDate>${formatRSSDate(posts[posts.length - 1].data.date)}</pubDate>
     <lastBuildDate>${formatRSSDate(new Date())}</lastBuildDate>
     <generator>https://github.com/samkingco/samking.blog</generator>
+    <image>
+      <url>${link}/icon-round-144.png</url>
+      <title>Words</title>
+      <link>${link}</link>
+      <width>144</width>
+      <height>144</height>
+      <description>${description}</description>
+    </image>
 ${posts
   .map(
     (post) => `    <item>
@@ -225,6 +232,13 @@ ${posts
 }
 
 async function build() {
+  // Copy public folder files for parcel
+  await fse.copy(
+    path.join(process.cwd(), "src/public"),
+    path.join(process.cwd(), "entry")
+  );
+
+  // Generate post data
   const posts: Post[] = await Promise.all(
     postFilePaths.map(async (filePath) => {
       const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
@@ -292,15 +306,9 @@ async function build() {
     })
   );
 
-  // Copy public folder files for parcel
-  await fse.copy(
-    path.join(process.cwd(), "src/public"),
-    path.join(process.cwd(), "entry")
-  );
-
   // Build the RSS feed
   await fse.outputFile(
-    path.join(process.cwd(), "dist/rss.xml"),
+    path.join(process.cwd(), "entry/rss.xml"),
     generateRSSFeed(sortedPosts)
   );
 }
