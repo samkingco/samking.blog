@@ -5,6 +5,11 @@ import { replaceInFile } from "replace-in-file";
   const timer = "Fixed links in dist .html files";
   console.time(timer);
   await replaceInFile({
+    files: "dist/**/rss.xml",
+    from: /\/icon-round-144.png/g,
+    to: "https://samking.blog/icon-round-144.png",
+  });
+  await replaceInFile({
     files: "dist/**/*.html",
     from: /\/index.html/g,
     to: "/",

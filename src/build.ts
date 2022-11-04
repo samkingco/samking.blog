@@ -67,6 +67,7 @@ function generateHead({ title, description, slug }: HeadProps) {
   <link rel="icon" type="image/x-icon" href="${basePath}favicon.ico"  />
   <link rel='icon' type='image/png' href='${basePath}favicon-64.png'>
   <link rel='icon' sizes='192x192' href='${basePath}icon-192.png'>
+  <link rel='icon' sizes='144x144' href='${basePath}icon-round-144.png'>
   <link rel='apple-touch-icon' href='${basePath}icon-152.png'>
   <meta name='msapplication-square310x310logo' content='${basePath}icon-310.png'>
   <link rel="alternate" type="application/rss+xml" title="Words RSS — Sam King" href="${basePath}rss.xml" />
@@ -207,7 +208,7 @@ function generateRSSFeed(posts: Post[]) {
     <lastBuildDate>${formatRSSDate(new Date())}</lastBuildDate>
     <generator>https://github.com/samkingco/samking.blog</generator>
     <image>
-      <url>${link}/icon-round-144.png</url>
+      <url>./icon-round-144.png</url>
       <title>Words</title>
       <link>${link}</link>
       <width>144</width>
