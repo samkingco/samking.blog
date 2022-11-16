@@ -91,7 +91,7 @@ function generateSiteHeader() {
 <header class="site-header">
   <div class="site-header-links">
     <p class="site-logo">
-      <a href="/">—words</a>
+      <a href="/">Sam King<br />Journal&mdash;</a>
     </p>
     <a href="https://samking.co">samking.co</a>
   </div>
@@ -103,10 +103,8 @@ function generatePostPreviews(posts: Post[]) {
     .map((post) => {
       return `
 <article class="post-preview">
-  <p class="subtle">
-    <small>
-      ${format(new Date(post.data.date), "do MMMM, yyyy")}
-    </small>
+  <p class="subtle mono">
+    ${format(new Date(post.data.date), "yyyy/MM/dd")}
   </p>
   <h2>
     <a href="./${post.slug}/index.html">${post.data.title}</a>
@@ -122,17 +120,16 @@ function generateIndexPage(posts: Post[]) {
 <!DOCTYPE html>
 <html lang="en">
   ${generateHead({
-    title: "Words — Sam King",
-    description:
-      "Documenting some thoughts to help get me back into writing. Posts will be about anything. Mostly my journey with design, Web3, and therapy.",
+    title: "Blog — Sam King",
+    description: "Documenting some thoughts to help get me back into writing.",
   })}
   <body>
     <main class="content">
       ${generateSiteHeader()}
       ${generatePostPreviews(posts)}
       <footer>
-        <p class="subtle">
-          Code on <a href="https://github.com/samkingco/samking.blog">Github</a> deployed to <a href="https://ipfs.io/">IPFS</a>.
+        <p class="subtle mono">
+          Code on <a href="https://github.com/samkingco/samking.blog">GitHub</a> deployed to <a href="https://ipfs.io/">IPFS</a>
         </p>
       </footer>
     </main>
@@ -140,7 +137,10 @@ function generateIndexPage(posts: Post[]) {
 </html>`;
 }
 
-function generatePostPage({ data, highlightedHtml, slug }: Post) {
+function generatePostPage(
+  { data, highlightedHtml, slug }: Post,
+  previousPosts: Post[]
+) {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -154,17 +154,38 @@ function generatePostPage({ data, highlightedHtml, slug }: Post) {
         ${generateSiteHeader()}
         <article class="post">
           <header class="post-header">
-            <p class="subtle">
-              <small>
-                ${format(new Date(data.date), "do MMMM, yyyy")}
-              </small>
+            <p class="subtle mono">
+              ${format(new Date(data.date), "yyyy/MM/dd")}
             </p>
             <h1>${data.title}</h1>
           </header>
           ${highlightedHtml}
           <footer class="post-footer">
-            <a href="/" class="all-posts-link">← All posts</a>
-            <p class="subtle">
+            ${
+              previousPosts.length > 0
+                ? `
+            <div class="previous-posts">
+              <h4 class="mono">Previously</h4>
+              <ul>
+              ${previousPosts
+                .map(
+                  (post) =>
+                    `<li><p><a href="/${post.slug}">${post.data.title}</a></p></li>
+                    `
+                )
+                .join("")}
+              </ul>
+            </div>
+            `
+                : ""
+            }
+
+            <hr class="small" />
+            <p>
+              <a href="/" class="all-posts-link">All posts</a>
+            </p>
+            
+            <p class="subtle mono">
               Found a mistake? Edit on 
               <a
                 href="https://github.com/samkingco/samking.blog/blob/main/src/posts/${slug}.md"
@@ -299,10 +320,10 @@ async function build() {
 
   // Build post pages
   await Promise.all(
-    sortedPosts.map(async (post) => {
+    sortedPosts.map(async (post, index) => {
       await fse.outputFile(
         path.join(process.cwd(), `entry/${post.slug}/index.html`),
-        generatePostPage(post)
+        generatePostPage(post, sortedPosts.slice(index + 1, index + 4))
       );
     })
   );
