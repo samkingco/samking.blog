@@ -89,12 +89,10 @@ function generateHead({ title, description, slug }: HeadProps) {
 function generateSiteHeader() {
   return `
 <header class="site-header">
-  <div class="site-header-links">
-    <p class="site-logo">
-      <a href="/">Sam King<br />Journal&mdash;</a>
-    </p>
-    <a href="https://samking.co">samking.co</a>
-  </div>
+  <p class="site-logo">
+    <a href="/">Sam King<br />Journal&mdash;</a>
+  </p>
+  <a href="https://samking.co">samking.co</a>
 </header>`;
 }
 
