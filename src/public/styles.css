@@ -35,11 +35,12 @@
 }
 
 :root {
-  --background: rgb(0, 0, 0);
-  --background-alpha: 0, 0, 0;
-  --foreground: rgb(255, 255, 255);
-  --foreground-alpha: 255, 255, 255;
-  --foreground-subtle: rgb(168, 168, 168);
+  --background: rgb(255, 255, 255);
+  --background-alpha: 255, 255, 255;
+  --foreground: rgb(0, 0, 0);
+  --foreground-alpha: 0, 0, 0;
+  --foreground-text: rgb(60, 60, 60);
+  --foreground-subtle: rgb(120, 120, 120);
   --accent: rgb(245, 42, 42);
 
   --content-max-width: 40em;
@@ -67,8 +68,8 @@ body {
   background-color: var(--background);
   font-family: var(--font-serif);
   font-size: 16px;
-  line-height: 1.4;
-  color: var(--foreground);
+  line-height: 1.5;
+  color: var(--foreground-text);
   cursor: crosshair;
 }
 
@@ -160,6 +161,10 @@ img {
   list-style: none;
   padding: 0;
   margin: 1em 0 0.5rem;
+}
+
+.emphasis, h1, h2, h3 {
+  color: var(--foreground);
 }
 
 .subtle {
@@ -496,17 +501,15 @@ code[class*="language-"] .highlight:before {
   cursor: help;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: rgb(255, 255, 255);
-    --background-alpha: 255, 255, 255;
-    --foreground: rgb(0, 0, 0);
-    --foreground-alpha: 0, 0, 0;
-    --foreground-subtle: rgb(88 88 88);
-  }
-}
-
 @media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(0, 0, 0);
+  --background-alpha: 0, 0, 0;
+  --foreground: rgb(255, 255, 255);
+  --foreground-alpha: 255, 255, 255;
+  --foreground-text: rgb(200, 200, 200);
+  --foreground-subtle: rgb(140, 140, 140);
+  }
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

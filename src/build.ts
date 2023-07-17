@@ -89,7 +89,7 @@ function generateHead({ title, description, slug }: HeadProps) {
 function generateSiteHeader() {
   return `
 <header class="site-header">
-  <p class="site-logo">
+  <p class="site-logo emphasis">
     <a href="/">Sam King<br />Journal&mdash;</a>
   </p>
   <a href="https://samking.co">samking.co</a>
@@ -168,7 +168,7 @@ function generatePostPage(
               ${previousPosts
                 .map(
                   (post) =>
-                    `<li><p><a href="/${post.slug}">${post.data.title}</a></p></li>
+                    `<li><p class="emphasis"><a href="/${post.slug}">${post.data.title}</a></p></li>
                     `
                 )
                 .join("")}
@@ -179,7 +179,7 @@ function generatePostPage(
             }
 
             <hr class="small" />
-            <p>
+            <p class="emphasis">
               <a href="/" class="all-posts-link">All posts</a>
             </p>
             
