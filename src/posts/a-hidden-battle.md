@@ -1,7 +1,7 @@
 ---
 title: A hidden battle
 excerpt: It's been a very long time since I wrote here, probably a symptom of the way I've been feeling. I've been avoiding some things and trying to distract myself.
-date: "2023-06-17"
+date: "2023-07-17"
 ---
 
 **TW: Suicide and Mental Health**
